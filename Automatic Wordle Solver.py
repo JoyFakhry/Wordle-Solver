@@ -1,4 +1,3 @@
-from turtle import tiltangle
 from big_list import answer_WORDS, valid_WORDS, frequency_WORDS
 import random
 
@@ -67,17 +66,25 @@ def frequency_guess(word_list):
     return best_word
 
 
-def solver(day, start, display):
+def solver(day_or_answer, start, display):
     global tiles
-    ANSWER = answer_WORDS[day + answer_WORDS_offset]
+    try:
+        ANSWER = int(day_or_answer)
+        ANSWER = answer_WORDS[ANSWER + answer_WORDS_offset]
+    except:
+        ANSWER = day_or_answer
+
     if display:
-        print(f"Today is day {day} and the word is {ANSWER.upper()}")
+        print(f"Today is day {day_or_answer} and the word is {ANSWER.upper()}")
     previous_possibilities = valid_WORDS
 
     if start == 'random':
         guess = random_guess(valid_WORDS)
     elif start == 'orate':
         guess = 'orate'
+    elif start == 'TRAIN':
+        guess = 'train'
+        second_guess = 'close'
     else:
         guess = start
     guess_number = 1
@@ -99,7 +106,11 @@ def solver(day, start, display):
         tiles = color_tiles(ANSWER, guess)
         possibilities = list(filter(check_guess, previous_possibilities))
 
+        
         guess = frequency_guess(possibilities)
+        if (guess_number == 1) and (start == 'TRAIN'):
+            guess = second_guess
+        
         previous_possibilities = possibilities
         guess_number += 1
 
@@ -109,11 +120,15 @@ if __name__ == "__main__":
     print('Input a day (0-2292) and starting word, and I will output the number of tries to get that')
     print()
     scores = []
-    current_day = 489
-    scores.append(solver(current_day, 'random', True))
-    print()
-    scores.append(solver(current_day, 'orate', True))
 
+    ANSWER = input('Input current day or word to solve for: ')
+
+    scores.append(solver(ANSWER, 'random', True))
+    print()
+    scores.append(solver(ANSWER, 'orate', True))
+    print()
+    scores.append(solver(ANSWER, 'TRAIN', True))
 
     print("Scores for Random and ORATE:")
     print(*scores, sep=", ")
+
