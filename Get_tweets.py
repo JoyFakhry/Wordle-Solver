@@ -19,3 +19,4 @@ def process_data(how_recent = 0):
 
 process_data(0)
 process_data(1)
+process_data(2)
