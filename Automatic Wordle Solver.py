@@ -1,13 +1,13 @@
 from big_list import answer_WORDS, valid_WORDS, frequency_WORDS
 import random
 
-answer_WORDS_offset = 23 # Add 23 to answer_words index to get actual current day
+answer_WORDS_offset = 23  # Add 23 to answer_words index to get actual current day
 
 
 def color_tiles(answer, guess):
-    tiles = {'yellow': ['', '', '', '', ''], \
-        'green': ['', '', '', '', ''], \
-        'grey': ['', '', '', '', '']}
+    tiles = {'yellow': ['', '', '', '', ''],
+             'green': ['', '', '', '', ''],
+             'grey': ['', '', '', '', '']}
 
     for index, letter in enumerate(guess):
         if letter in answer and guess[index] == answer[index]:
@@ -28,18 +28,21 @@ def color_tiles(answer, guess):
 def check_guess(guess):
     global tiles
     for index, letter in enumerate(tiles['grey']):    # check grey tiles first
-        if (letter in tiles['green']) or (letter in tiles['yellow']):  # if letter occurs twice in guess
+        # if letter occurs twice in guess
+        if (letter in tiles['green']) or (letter in tiles['yellow']):
             if guess[index] == letter:  # if letter is in the same position as guessed word
                 return False
         elif (letter != '') and (letter in guess):  # if letter is in guessed word and occurs once
             return False
     for index, letter in enumerate(tiles['green']):    # check green tiles next
-        if (letter != '') and (guess[index] != letter): # if green tile not in same position as word
+        # if green tile not in same position as word
+        if (letter != '') and (guess[index] != letter):
             return False
     keep = [True]   # initialize list for each letter in yellow tiles
     for index, letter in enumerate(tiles['yellow']):
-        if (letter in tiles['grey']) or (letter in tiles['green']):  # if letter occurs twice in guess
-            if guess.count(letter) < 2: # if letter occurs once in guess
+        # if letter occurs twice in guess
+        if (letter in tiles['grey']) or (letter in tiles['green']):
+            if guess.count(letter) < 2:  # if letter occurs once in guess
                 return False
         if (letter != '') and (letter not in guess):    # if letter not in word
             return False
@@ -51,7 +54,8 @@ def check_guess(guess):
 def random_guess(word_list):
     a_word = random.choice(word_list)
     if len(word_list) > 20:     # if there are a lot of possible words
-        while len(a_word) != len(set(a_word)):  # loop through word until you don't get repeating letters
+        # loop through word until you don't get repeating letters
+        while len(a_word) != len(set(a_word)):
             a_word = random.choice(word_list)   # get random choice from list
     return a_word
 
@@ -106,11 +110,10 @@ def solver(day_or_answer, start, display):
         tiles = color_tiles(ANSWER, guess)
         possibilities = list(filter(check_guess, previous_possibilities))
 
-        
         guess = frequency_guess(possibilities)
         if (guess_number == 1) and (start == 'TRAIN'):
             guess = second_guess
-        
+
         previous_possibilities = possibilities
         guess_number += 1
 
@@ -131,4 +134,3 @@ if __name__ == "__main__":
 
     print("Scores for Random and ORATE:")
     print(*scores, sep=", ")
-
