@@ -25,7 +25,7 @@ def color_tiles(answer, guess):
     return tiles
 
 
-def check_guess(guess):
+def check_guess(guess): 
     global tiles
     for index, letter in enumerate(tiles['grey']):    # check grey tiles first
         # if letter occurs twice in guess
