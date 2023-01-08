@@ -1,5 +1,4 @@
 {
-    "cSpell.words": [
-        "termcolor"
-    ]
+  "cSpell.words": ["termcolor"],
+  "python.analysis.typeCheckingMode": "basic"
 }
