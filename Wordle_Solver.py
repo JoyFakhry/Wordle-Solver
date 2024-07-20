@@ -5,12 +5,6 @@ from big_list import valid_WORDS, frequency_WORDS
 from termcolor import colored   # pip install termcolor to work
 
 
-# import sys
-# import subprocess
-# subprocess.check_call([sys.executable, '-m', 'pip', 'install',
-#    'termcolor'])
-
-
 # function to check if a word in word list matches user guess
 # returns true if it can be used, false otherwise
 def check_guess(guess):
@@ -127,7 +121,7 @@ if __name__ == "__main__":
         print("Next guess:", colored(next_guess.upper(), attrs=["bold"]))
 
         # if there are only a few choices remaining, print all of them
-        if (len(possibilities)) <= 6 and (len(possibilities) != 1):
+        if (len(possibilities)) <= 10 and (len(possibilities) != 1):
             print('\nRemaining choices:')
             for word in possibilities:
                 if word == next_guess:
